@@ -14,8 +14,8 @@ Then click on **Tools** menu, **NuGet Package Manager** and in **Package Manager
 
 Install bellow packages:
 
-Install-Package Microsoft.Net.Http
-Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -Version 2.15.204151539
+- Install-Package Microsoft.Net.Http
+- Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -Version 2.15.204151539
 
 ![Install Nuget Packages](https://cloud.githubusercontent.com/assets/12012898/7217636/cb27b382-e60f-11e4-90ad-b3c6338d3b1d.png)
 
@@ -25,9 +25,9 @@ Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -Version 2.15.20
 
 To create this project, Create a New ASP.NET Web Application and then choose Empty Template. We're going to create everything from the ground.
 
-[New Project](https://cloud.githubusercontent.com/assets/12012898/7217678/a7caa63a-e612-11e4-9729-8d3b7c4e9f32.png)
+![New Project](https://cloud.githubusercontent.com/assets/12012898/7217678/a7caa63a-e612-11e4-9729-8d3b7c4e9f32.png)
 
-[Choose Template](https://cloud.githubusercontent.com/assets/12012898/7217677/a7c60b16-e612-11e4-8603-b5cfaf261fea.png)
+![Choose Template](https://cloud.githubusercontent.com/assets/12012898/7217677/a7c60b16-e612-11e4-8603-b5cfaf261fea.p!ng)
 
 ### NuGet Packages
 To create a solution from scratch, Open Visual Studio and create a new Windows Console Application Solution.
@@ -36,11 +36,11 @@ Then click on **Tools** menu, **NuGet Package Manager** and in **Package Manager
 
 Install bellow packages:
 
-Install-Package Microsoft.AspNet.WebApi
-Install-Package Microsoft.AspNet.WebApi.Owin
-Install-Package Microsoft.Owin.Host.SystemWeb
-Install-Package Microsoft.Owin.Security.ActiveDirectory
-Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -Version 2.15.204151539
+- Install-Package Microsoft.AspNet.WebApi
+- Install-Package Microsoft.AspNet.WebApi.Owin
+- Install-Package Microsoft.Owin.Host.SystemWeb
+- Install-Package Microsoft.Owin.Security.ActiveDirectory
+- Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -Version 2.15.204151539
 
 ![Install Nuget Packages](https://cloud.githubusercontent.com/assets/12012898/7217682/1323c2c2-e613-11e4-9b83-fec0f80fdad9.png)
 
