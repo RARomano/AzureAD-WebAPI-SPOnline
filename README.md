@@ -108,8 +108,7 @@ Add the code below.
 
 ![WebApiConfig code](https://cloud.githubusercontent.com/assets/12012898/7217726/45eefda8-e617-11e4-9a3d-65a56a830aae.png)
 
-```
-C#
+```C#
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -150,8 +149,7 @@ I'm leaving only a Test method. Just to test the first part of the solution.
 
 The important thing here is to Annotate your class with **[Authorize]**. With that annotation, your api will only accept authenticated request. Easy, isn't it?
 
-```
-C#
+```C#
 [Authorize]
 public class TestController : ApiController
 {
