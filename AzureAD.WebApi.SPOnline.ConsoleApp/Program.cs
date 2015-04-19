@@ -13,16 +13,23 @@ namespace AzureAD.WebApi.SPOnline.ConsoleApp
     {
         static void Main(string[] args)
         {
+            /// Azure AD WebApi's APP ID URL
             string resource = "";
+
+            /// Azure AD WebApi's Client ID 
             string clientId = "";
+
+            /// Azure AD User's credentials
             string userName = "";
             string userPassword = "";
-            string apiUrl = "";
 
-          var user = new UserCredential(userName, userPassword);
-            
+            /// Web API's URL
+            string apiUrl = "http://localhost:3672/api/Test";
+
+            var user = new UserCredential(userName, userPassword);
+
             var authContext = new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext("https://login.windows.net/common");
-           
+
             /// Get an Access Token to Access the Web API on behalf of the user
             AuthenticationResult authResult = authContext.AcquireTokenAsync(resource, clientId, user).Result;
 

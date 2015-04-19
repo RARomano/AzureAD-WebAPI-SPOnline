@@ -5,6 +5,8 @@ The application uses the Active Directory Authentication Library (ADAL) to get a
 
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD.](http://go.microsoft.com/fwlink/?LinkId=394414)
 
+If you just want to get an working demo, please go to [this link.](#How_to_run_this_sample)
+
 ## Console Application
 
 ### NuGet Packages
@@ -139,27 +141,82 @@ namespace AzureAD.WebApi.SPOnline.WebApi.App_Start
 }
 ```
 
+### Add SharePoint Client References
+
+Right-Click in **References** and select **Add Reference...**
+
+Choose:
+
+- Microsoft.SharePoint.Client
+- Microsoft.SharePoint.Client.Runtime
+
+![References](https://cloud.githubusercontent.com/assets/12012898/7217943/94eefaae-e624-11e4-9d20-953c133e5161.png)
+
 ### Add a Controller to Handle Requests
 
 Create a new Folder named **Controllers**. Add a new Web API 2 Controller. Give it a name.
 
 ![Create new Controller](https://cloud.githubusercontent.com/assets/12012898/7217729/f66bd598-e617-11e4-91ae-e79bc3e6b475.png)
 
-I'm leaving only a Test method. Just to test the first part of the solution. 
+The *Test* method goes on SharePoint Online using a new User's AccessToken and returns the site title.
 
 The important thing here is to Annotate your class with **[Authorize]**. With that annotation, your api will only accept authenticated request. Easy, isn't it?
 
 ```C#
-[Authorize]
-public class TestController : ApiController
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.SharePoint.Client;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace AzureAD.WebApi.SPOnline.WebApi.Controllers
 {
-    [HttpGet]
-    public string Test()
+    [Authorize]
+    public class TestController : ApiController
     {
-        return "OK";
+        [HttpGet]
+        public string Test()
+        {
+            string sharePointUrl = ConfigurationManager.AppSettings["SharePointURL"];
+            string newToken = GetSharePointAccessToken(sharePointUrl, this.Request.Headers.Authorization.Parameter);
+
+            using (ClientContext cli = new ClientContext(sharePointUrl))
+            {
+
+                /// Adding authorization header 
+                cli.ExecutingWebRequest += (s, e) => e.WebRequestExecutor.WebRequest.Headers.Add("Authorization", "Bearer " + newToken);
+            
+                var web = cli.Web;
+                cli.Load(web);
+                cli.ExecuteQuery();
+                return web.Title;
+            }
+        }
+
+        internal static string GetSharePointAccessToken(string url, string accessToken)
+        {
+            string clientID = ConfigurationManager.AppSettings["ClientID"];
+            string clientSecret = ConfigurationManager.AppSettings["ClientSecret"];
+
+            var appCred = new ClientCredential(clientID, clientSecret);
+            var authContext = new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext("https://login.windows.net/common");
+
+            AuthenticationResult authResult = authContext.AcquireToken(new Uri(url).GetLeftPart(UriPartial.Authority), appCred, new UserAssertion(accessToken));
+            return authResult.AccessToken;
+        }
+
+     
     }
 }
 ```
+
+
+
+
 
 ## How to run this sample
 
@@ -175,3 +232,44 @@ Every Azure subscription has an associated Azure Active Directory tenant.  If yo
 From your shell or command line:
 
 `git clone https://github.com/RARomano/AzureAD-WebAPI-SPOnline.git`
+
+### Step 2:  Register the Web API in Azure Active Directory
+
+To create your applications in Azure, please follow instructions provided in this link: [Create Azure AD Application.](http://bitoftech.net/2014/09/12/secure-asp-net-web-api-2-azure-active-directory-owin-middleware-adal/)
+
+There are a lot of links that explains the same steps. If you will use the link I've provided, follow the steps: 3, 4, 7, 8 and 9.
+
+In addition to that, open your WebAPI project in Azure management portal and click on Configure link.
+
+Click on **Add Application** and Choose **Office 365 SharePoint Online** and grant **Have Full control of all site collections permission**.
+
+### Step 3:  Update references in the Windows Console Application and WEB API project
+
+In the **ConsoleApp** project, update values in **Program.cs** file.
+
+```C#
+/// Azure AD WebApi's APP ID URL
+string resource = "";
+
+/// Azure AD WebApi's Client ID 
+string clientId = "";
+
+/// Azure AD User's credentials
+string userName = "";
+string userPassword = "";
+
+/// Web API's URL
+string apiUrl = "http://localhost:3672/api/Test";
+```
+
+In the **WebApi** Project, update the **Web.Config** file.
+
+```
+ <appSettings>
+    <add key="Audience" value="APPURI" />
+    <add key="Tenant" value="TenantGUID" />
+    <add key="ClientID" value="ClientID" />
+    <add key="ClientSecret" value="ClientSecret" />
+    <add key="SharePointURL" value="https://[yourtenant].SharePoint.com" />
+  </appSettings> 
+```
