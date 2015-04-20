@@ -1,6 +1,6 @@
 # AzureAD-WebAPI-SPOnline
 
-In this sample, a Windows console Application calls a Web API secured by Azure AD and the API calls SharePoint Online on behalf the logged in user. This scenario is useful for situations where you need a protected API Proxy to interact with SharePoint Online using User's credentials.
+In this sample, a Windows console Application calls a Web API secured by Azure AD and the API calls SharePoint Online on behalf the logged in user. This scenario is useful for situations where you need a protected API proxy to interact with SharePoint Online using User's credentials.
 The application uses the Active Directory Authentication Library (ADAL) to get a token from Azure AD using the OAuth 2.0 client credential flow, where the client credential is a password.
 
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD.](http://go.microsoft.com/fwlink/?LinkId=394414)
@@ -10,7 +10,7 @@ If you just want to get an working demo, please go to [this link.](#How_to_run_t
 ## Console Application
 
 ### NuGet Packages
-To create a solution from scratch, Open Visual Studio and create a new Windows Console Application Solution.
+To create a solution from scratch, open Visual Studio and create a new Windows Console Application Solution.
 
 Then click on **Tools** menu, **NuGet Package Manager** and in **Package Manager Console** item.
 
@@ -32,7 +32,7 @@ To create this project, Create a New ASP.NET Web Application and then choose Emp
 ![Choose Template](https://cloud.githubusercontent.com/assets/12012898/7217677/a7c60b16-e612-11e4-8603-b5cfaf261fea.png)
 
 ### NuGet Packages
-To create a solution from scratch, Open Visual Studio and create a new Windows Console Application Solution.
+To create a solution from scratch, open Visual Studio and create a new Windows Console Application Solution.
 
 Then click on **Tools** menu, **NuGet Package Manager** and in **Package Manager Console** item.
 
@@ -52,11 +52,11 @@ The first thing we need to do is to tell Owin Framework what class is responsibl
 
 ![Add Owin Startup Class](https://cloud.githubusercontent.com/assets/12012898/7217698/4cc88178-e615-11e4-8166-1960558e911f.png)
 
-Add below "annotation" right before class namespace
+Add the below annotation right before the class namespace.
 
 `[assembly: OwinStartup(typeof(AzureAD.WebApi.SPOnline.WebApi.Startup))]`
 
-**Replace AzureAD.WebApi.SPOnline.WebApi for your own Startup class' namespace**
+**Replace AzureAD.WebApi.SPOnline.WebApi for your own Startup namespace of the class**
 
 ![Owin Startup Class Code](https://cloud.githubusercontent.com/assets/12012898/7217702/9b16731c-e615-11e4-9b6a-ad4138c0df6f.png)
 
@@ -102,11 +102,11 @@ namespace AzureAD.WebApi.SPOnline.WebApi
 
 ### Add WebApiConfig Class
 
-Create a new Folder named **App_Start** and add a new class. The class name is *WebApiConfig*.
+Create a new folder named **App_Start** and add a new class. The class name will be *WebApiConfig*.
 
 ![Create class](https://cloud.githubusercontent.com/assets/12012898/7217709/d0106c20-e616-11e4-8e57-edac8dbee455.png)
 
-Add the code below.
+Add the code below:
 
 ![WebApiConfig code](https://cloud.githubusercontent.com/assets/12012898/7217726/45eefda8-e617-11e4-9a3d-65a56a830aae.png)
 
@@ -143,7 +143,7 @@ namespace AzureAD.WebApi.SPOnline.WebApi.App_Start
 
 ### Add SharePoint Client References
 
-Right-Click in **References** and select **Add Reference...**
+Right-click in **References** and select **Add Reference...**
 
 Choose:
 
@@ -154,13 +154,13 @@ Choose:
 
 ### Add a Controller to Handle Requests
 
-Create a new Folder named **Controllers**. Add a new Web API 2 Controller. Give it a name.
+Create a new folder named **Controllers**. Add a new Web API 2 Controller. Give it a name.
 
 ![Create new Controller](https://cloud.githubusercontent.com/assets/12012898/7217729/f66bd598-e617-11e4-91ae-e79bc3e6b475.png)
 
 The *Test* method goes on SharePoint Online using a new User's AccessToken and returns the site title.
 
-The important thing here is to Annotate your class with **[Authorize]**. With that annotation, your api will only accept authenticated request. Easy, isn't it?
+The important thing here is to annotate your class with **[Authorize]**. With that annotation, your api will only accept authenticated request. Easy, isn't it?
 
 ```C#
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -225,7 +225,7 @@ To run this sample you will need:
 - An Internet connection
 - An Azure subscription (a free trial is sufficient)
 
-Every Azure subscription has an associated Azure Active Directory tenant.  If you don't already have an Azure subscription, you can get a free subscription by signing up at [http://wwww.windowsazure.com](http://www.windowsazure.com).  All of the Azure AD features used by this sample are available free of charge.
+Every Azure subscription has an associated Azure Active Directory tenant.  If you don't already have an Azure subscription, you can get a free subscription by signing up at [http://wwww.windowsazure.com](http://www.windowsazure.com). All of the Azure AD features used by this sample are available free of charge.
 
 ### Step 1:  Clone or download this repository
 
